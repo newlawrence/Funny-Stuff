@@ -1,0 +1,12 @@
+# OS X related
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+
+# Python related
+__pycache__/
+
+# Other
+*.log

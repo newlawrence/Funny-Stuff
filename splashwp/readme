@@ -1,0 +1,21 @@
+- About Splash WhatsApp:
+    Splash WhatsApp its a very simple WhatsApp listener client that displays
+    messages and images, received from a desired phone number, using the
+    WhatsApp API for Python Yowsup (by Tarek Galal). Those messages are shown in
+    screen as splash screens.
+
+- Remarks:
+    The registration password for the local phone number (the one who is going
+    to receive the messages) is required. I strongly recommend to get a new
+    number, not associated to WhatsApp yet, to register to the service and
+    obtain that password. There are lots of tutorials showing how to achieve
+    this using Yowsup on the internet.
+
+- Requirements:
+    Python3
+    dateutil
+    PyQt5 / PyQt4 / PySide
+    Yowsup (included with the source)
+
+- License:
+    GNU GPLv3 - Copyright (c) <2014> Alberto Lorenzo <alorenzo.md@gmail.com>

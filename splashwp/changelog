@@ -1,0 +1,32 @@
+[Splash WhatsApp] Changelog:
+
+- Version 1.1.0 (25/June/2014):
+    · Code revision.
+    · Program is now able to receive and splash images.
+    · Messages can be hidden by pressing the spacebar.
+    · A new set of commands enclosed by '{' and '}' have been added:
+        > $bold - sets text in bold characters.
+        > $ital - sets text in italics.
+        > $eval - if text is a valid expression, evals it.
+        > $calc - the same as eval but appending the calculations.
+        > $exec - passes the text to be executed to the OS.
+
+- Version 1.0.1-Rev2 (19/June/2014):
+    · PySide support.
+    · Command line API selection has been added.
+
+- Version 1.0.1-Rev1 (18/June/2014):
+    · PyQt5 support.
+
+- Version 1.0.1 (16/June/2014):
+    · Code revision.
+
+- Version 1.0.0 (14/June/2014):
+    · Support for internationalization has been added.
+    · Translation to spanish has been included.
+    · New text for some error messages (i.e. "DNS error").
+
+ ----- ----- ----- -----
+
+- Version 0.9.1 (12/June/2014):
+    · Initial release.
