@@ -8,4 +8,6 @@ De momento estos son los ficheros:
 
 * **etiquetas** (*OS X y Windows*): un fichero con plantillas para gráficos de dispersión y burbujas propios de **Excel**, pero con etiquetas personalizadas para los gráficos. La macro se encarga de refrescar los cambios en los datos de manera transparente al usuario.
 
+* **correo** (*Windows*): la hoja *correo* será convertida a formato HTML y enviada por correo. Gráficos, objetos insertados y formatos condicionales no pueden ser incluidos en el código HTML, por lo que una funcionalidad extra para convertir la hoja en imagen e incrustarla en el correo ha sido añadida. Incluye soporte para ficheros ajuntos y previsualización del correo en el navegador antes del envío. **Requiere de Outlook correctamente configurado.**
+
 Todos estos ficheros han podido ser construidos gracias a los cientos de aportaciones anónimas a lo largo y ancho de internet, por lo que la totalidad de su contenido está disponible para ser utilizado, copiado y editado sin ninguna clase de restricción por mi parte.
