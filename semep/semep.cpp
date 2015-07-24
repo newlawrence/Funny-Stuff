@@ -1,3 +1,11 @@
+//
+// Copyright (c) SEMEP 2013  - Alberto Lorenzo (alorenzo.md@gmail.com)
+//
+// Distributed under the MIT License.
+// (See accompanying file "copying" or copy at
+// http://opensource.org/licenses/MIT)
+//
+
 #include <sstream>
 
 #include <cstdlib>
@@ -80,14 +88,18 @@ namespace SEMEP {
 		return "SEMEP Error: Unexpected error";
 	}
 
-	Expression::Expression() : varCount(0), builtFlag(false), errorFlag(false) {}
+	Expression::Expression() : varCount(0), builtFlag(false),
+                               errorFlag(false) {}
 
-	Expression::Expression(const Expression &e) : varCount(0), builtFlag(false), errorFlag(false) {
+	Expression::Expression(const Expression &e) : varCount(0), builtFlag(false),
+                                                  errorFlag(false) {
 		if(e.builtFlag)
 			build(e.literal);
 	}
 
-	Expression::Expression(const std::string &s) : varCount(0), builtFlag(false), errorFlag(false) {
+	Expression::Expression(const std::string &s) : varCount(0),
+                                                   builtFlag(false),
+                                                   errorFlag(false) {
 		build(s);
 	}
 
@@ -103,7 +115,6 @@ namespace SEMEP {
 	}
 
 	const Expression& Expression::operator=(const std::string &s) {
-		clear();
 		build(s);
 
 		return *this;
@@ -114,7 +125,6 @@ namespace SEMEP {
 
 		try {
 			if(!builtFlag) throw Error(EMPTY);
-
 		}
 		catch(Error &e) {
 			errorFlag = true;
@@ -124,7 +134,8 @@ namespace SEMEP {
 		}
 		errorFlag = false;
 
-		for(std::list<Member *>::iterator it = postfixList.begin(); it != postfixList.end(); ++it)
+		for(std::list<Member *>::iterator it = postfixList.begin();
+            it != postfixList.end(); ++it)
 			(*it)->evaluate(outputStack);
 		x = outputStack.top();
 		outputStack.pop();
@@ -138,7 +149,6 @@ namespace SEMEP {
 
 		try {
 			if(!builtFlag) throw Error(EMPTY);
-
 		}
 		catch(Error &e) {
 			errorFlag = true;
@@ -170,8 +180,7 @@ namespace SEMEP {
 		clear();
 		literal = s;
 
-		// Prepare the input string for detect objects
-
+		// Prepare the input string to detect objects
 		{
 			bool varmode = false;
 
@@ -181,7 +190,8 @@ namespace SEMEP {
 					break;
 				case('('): case(')'): case('+'): case('-'):
 				case('*'): case('/'): case('^'):
-					internal += std::string(" ") += literal.substr(i, 1) += std::string(" ");
+					internal += std::string(" ") += literal.substr(i, 1) +=
+                                std::string(" ");
 					break;
 				case(','):
 					varmode = true;
@@ -192,7 +202,8 @@ namespace SEMEP {
 				if(varmode) break;
 			}
 			if(varmode) {
-				for(unsigned int i = literal.find(",", 0); i < literal.size(); i++) {
+				for(unsigned int i = literal.find(",", 0); i < literal.size();
+                    i++) {
 					switch(literal[i])
 					{
 					case(' '):
@@ -209,7 +220,6 @@ namespace SEMEP {
 		}
 
 		// Load variables
-
 		{
 			std::string object;
 			std::istringstream stream;
@@ -229,7 +239,6 @@ namespace SEMEP {
 		}
 
 		// Load infixList
-
 		double t;
 
 		try {
@@ -239,7 +248,8 @@ namespace SEMEP {
 
 					stream.str(internal);
 					stream >> object;
-					while((object != "_EXPRVar_") && (object != "_EXPRFinish_")) {
+					while((object != "_EXPRVar_") &&
+                          (object != "_EXPRFinish_")) {
 						t = strtod(object.c_str(), NULL);
 						if(t) {
 							addNumber(t);
@@ -248,7 +258,8 @@ namespace SEMEP {
 						else {
 							if(constantList.find(object) != constantList.end())
 								infixList.push_back(&constantList.at(object));
-							else if(variableList.find(object) != variableList.end())
+							else if(variableList.find(object) !=
+                                    variableList.end())
 								infixList.push_back(&variableList.at(object));
 							else if(unaryList.find(object) != unaryList.end())
 								infixList.push_back(&unaryList.at(object));
@@ -266,7 +277,6 @@ namespace SEMEP {
 				}
 
 			// Check for sintax errors
-
 			{
 				std::list<Member *>::iterator it1, it2;
 				unsigned int left, right;
@@ -276,31 +286,42 @@ namespace SEMEP {
 
 				left = 0, right = 0;
 
-				if((*it1)->getKind() == BinaryOperator) throw Error(BINARYFIRST);
-				if((*it1)->getKind() == RightBracket) throw Error(RIGHTFIRST);
-
-				if((*it1)->getKind() == LeftBracket) ++left;
+				if((*it1)->getKind() == BinaryOperator)
+                    throw Error(BINARYFIRST);
+				if((*it1)->getKind() == RightBracket)
+                    throw Error(RIGHTFIRST);
+				if((*it1)->getKind() == LeftBracket)
+                    ++left;
 
 				++it1;
 
 				while(it1 != infixList.end()) {
-					if(((*it2)->getGlobal() == Operand) && ((*it1)->getGlobal() == Operand))
+					if(((*it2)->getGlobal() == Operand) &&
+                       ((*it1)->getGlobal() == Operand))
 						throw Error(OPERANDSTOGETHER);
-					if(((*it2)->getKind() == UnaryOperator) && ((*it1)->getKind() == BinaryOperator))
+					if(((*it2)->getKind() == UnaryOperator) &&
+                       ((*it1)->getKind() == BinaryOperator))
 						throw Error(OPERATORSTOGETHER);
-					if(((*it2)->getKind() == BinaryOperator) && ((*it1)->getKind() == BinaryOperator))
+					if(((*it2)->getKind() == BinaryOperator) &&
+                       ((*it1)->getKind() == BinaryOperator))
 						throw Error(OPERATORSTOGETHER);
-					if(((*it2)->getGlobal() == Operand) && ((*it1)->getKind() == LeftBracket))
+					if(((*it2)->getGlobal() == Operand) &&
+                       ((*it1)->getKind() == LeftBracket))
 						throw Error(OPERANDLEFT);
-					if(((*it2)->getKind() == LeftBracket) && ((*it1)->getKind() == RightBracket))
+					if(((*it2)->getKind() == LeftBracket) &&
+                       ((*it1)->getKind() == RightBracket))
 						throw Error(BRACKETSTOGETHER);
-					if(((*it2)->getKind() == RightBracket) && ((*it1)->getKind() == LeftBracket))
+					if(((*it2)->getKind() == RightBracket) &&
+                       ((*it1)->getKind() == LeftBracket))
 						throw Error(BRACKETSTOGETHER);
-					if(((*it2)->getKind() == RightBracket) && ((*it1)->getGlobal() == Operand))
+					if(((*it2)->getKind() == RightBracket) &&
+                       ((*it1)->getGlobal() == Operand))
 						throw Error(RIGHTOPERAND);
-					if(((*it2)->getGlobal() == Operator) && ((*it1)->getKind() == RightBracket))
+					if(((*it2)->getGlobal() == Operator) &&
+                       ((*it1)->getKind() == RightBracket))
 						throw Error(OPERATORRIGHT);
-					if(((*it2)->getKind() == RightBracket) && ((*it1)->getKind() == UnaryOperator))
+					if(((*it2)->getKind() == RightBracket) &&
+                       ((*it1)->getKind() == UnaryOperator))
 						throw Error(RIGHTOPERATOR);
 
 					if((*it1)->getKind() == LeftBracket) ++left;
@@ -316,7 +337,6 @@ namespace SEMEP {
 
 		}
 		catch(Error &e) {
-			clear();
 			errorFlag = true;
 			if(exceptions) throw;
 			lastError = e.what();
@@ -324,8 +344,8 @@ namespace SEMEP {
 		}
 
 		// If everything OK, create postfixList from infixList
-
-		for(std::list<Member *>::iterator it = infixList.begin(); it != infixList.end(); ++it) {
+		for(std::list<Member *>::iterator it = infixList.begin();
+            it != infixList.end(); ++it) {
 			switch((*it)->getKind()) {
 			case(Number): case(Constant): case(Variable):
 				postfixList.push_back(*it);
@@ -334,7 +354,9 @@ namespace SEMEP {
 				operatorStack.push(*it);
 				break;
 			case(BinaryOperator):
-				while((!operatorStack.empty()) && ((*it)->getPriority() <= operatorStack.top()->getPriority())) {
+				while((!operatorStack.empty()) &&
+                      ((*it)->getPriority() <=
+                      operatorStack.top()->getPriority())) {
 					if(operatorStack.top()->getKind() == LeftBracket)
 						break;
 					else {
@@ -431,7 +453,7 @@ namespace SEMEP {
 	void Expression::throwExceptions(bool b) {
 		exceptions = b;
 	}
-	
+
 	bool Expression::checkError() {
 		if(errorFlag) {
 			errorFlag = false;
@@ -465,7 +487,8 @@ namespace SEMEP {
 			unaryList.insert(std::make_pair(s, MemberUnary(f)));
 	}
 
-	void Expression::addBinary(std::string s, double (*f)(double x, double y), unsigned char p) {
+	void Expression::addBinary(std::string s, double (*f)(double x, double y),
+                               unsigned char p) {
 		if(binaryList.find(s) == binaryList.end())
 			binaryList.insert(std::make_pair(s, MemberBinary(f, p)));
 	}
@@ -537,6 +560,11 @@ double SEMEP_eval(SEMEP_Expression e, ...) {
 	return e.expression->operator()(r, s, t, u, v, w, x, y, z);
 }
 
+double SEMEP_feval(SEMEP_Expression e, double r, double s, double t, double u,
+                   double v, double w, double x, double y, double z) {
+	return e.expression->operator()(r, s, t, u, v, w, x, y, z);
+}
+
 void SEMEP_build(SEMEP_Expression *e, const char *c) {
 	e->expression->build(std::string(c));
 }
@@ -548,7 +576,7 @@ void SEMEP_clear(SEMEP_Expression *e) {
 int SEMEP_isBuilt(SEMEP_Expression e) {
 	if(e.expression->isBuilt())
 		return 1;
-	return 0;	
+	return 0;
 }
 
 void SEMEP_getLiteral(SEMEP_Expression e, char *c) {
@@ -559,8 +587,16 @@ void SEMEP_getVarName(SEMEP_Expression e, char *c, unsigned int i) {
 	strcpy(c, e.expression->getVarName(i).c_str());
 }
 
-int SEMEP_getVarCount(SEMEP_Expression e) {
+void SEMEP_fgetVarName(SEMEP_Expression e, char *c, int i) {
+	strcpy(c, e.expression->getVarName(static_cast<unsigned int>(i)).c_str());
+}
+
+unsigned int SEMEP_getVarCount(SEMEP_Expression e) {
 	return e.expression->getVarCount();
+}
+
+int SEMEP_fgetVarCount(SEMEP_Expression e) {
+	return static_cast<int>(e.expression->getVarCount());
 }
 
 int SEMEP_checkError(SEMEP_Expression e) {
@@ -571,4 +607,12 @@ int SEMEP_checkError(SEMEP_Expression e) {
 
 void SEMEP_whatError(SEMEP_Expression e, char *c) {
 	strcpy(c, e.expression->what().c_str());
+}
+
+void SEMEP_addConstant(const char *c, double x) {
+	SEMEP::Expression::addConstant(std::string(c), x);
+}
+
+void SEMEP_addUnaryOperator(const char *c, double (*f)(double x)) {
+	SEMEP::Expression::addUnary(std::string(c), f);
 }
