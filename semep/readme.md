@@ -6,6 +6,6 @@ It's a mathematical expressions parser written in **C++** which I made in the pa
 
 Bindings for **C** are built inside the code. Another binding for **Fortran 95/2003** is provided.
 
-To test the library, copy all its code into the `example` folder and type `make` (**GNU Make** properly installed is needed).
+To test the library, copy all its code into the `example` folder, type `make` (**GNU Make** properly installed is needed) and run the `example` program.
 
-Code is lincesed under **MIT License**.
+Code is lincesed under [MIT](http://opensource.org/licenses/MIT) license.
