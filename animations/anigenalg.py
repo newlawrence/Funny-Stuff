@@ -391,7 +391,7 @@ def animate(it):
     if f == 0:    # Competition.
         P = comp(P, m)
         title1.set_text(r'$Generation$ $\#{0}$ $after$ '
-                        '$competing$'.format(it // 3))
+                        '$tournament$'.format(it // 3))
     elif f == 1:    # Crossover.
         P = cross(P)
         title1.set_text(r'$Generation$ $\#{0}$ $after$ '
