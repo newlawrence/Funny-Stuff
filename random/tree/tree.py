@@ -48,6 +48,6 @@ if __name__ == '__main__':
     tree = build_tree(data)
 
     body.insert(0, tree)
-    html = etree.tostring(page, pretty_print=True).decode()
+    html = etree.tostring(page).decode()
     with open('tree.html', 'w') as html_file:
         html_file.write(html)

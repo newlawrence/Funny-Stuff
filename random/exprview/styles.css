@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.tree {
+  -webkit-transform: scaleY(-1);
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  width: auto;
+}
+
+.tree ul {
+  -webkit-align-items: -webkit-flex-stretch;
+  background-color: #fff;
+  display: -webkit-flex;
+  padding-top: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.tree li {
+  -webkit-align-items: center;
+  -webkit-flex-direction: column;
+  display: -webkit-flex;
+  list-style-type: none;
+  padding: 20px 5px 0;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tree li::before,
+.tree li::after {
+  border-top: 1px solid #ccc;
+  content: '';
+  height: calc(100% - 1px);
+  position: absolute;
+  right: 50%;
+  top: 0;
+  width: 50%;
+  z-index: 1;
+}
+
+.tree li::after {
+  border-left:1px solid #ccc;
+  left:50%;
+  right:auto;
+}
+
+.tree li:only-child::after,
+.tree li:only-child::before {
+  display: none;
+}
+
+.tree li:only-child {
+  padding-top: 0;
+}
+
+.tree li:first-child::before,
+.tree li:last-child::after {
+  border: 0 none;
+}
+
+.tree li:last-child::before {
+  border-radius: 0 5px 0 0;
+  border-right: 1px solid #ccc;
+}
+
+.tree li:first-child::after {
+  border-radius: 5px 0 0 0;
+}
+
+.tree ul ul::before {
+  border-left: 1px solid #ccc;
+  content: '';
+  height: 20px;
+  left: 50%;
+  position: absolute;
+  top: 0;
+  width: 0;
+}
+
+.tree li a {
+  -webkit-transform: scaleY(-1);
+  background-color: #FFFFE0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #000;
+  display: inline-block;
+  font-family: Lucida Console, Monaco, monospace;
+  font-size: 12px;
+  margin-top: auto;
+  padding: 5px 10px;
+  text-decoration: none;
+  z-index: 3;
+}
+
+.tree li a:hover,
+.tree li a:hover+ul li a {
+  background-color: #c8e4f8;
+  border: 1px solid #94a0b4;
+  color: #000;
+}
+
+.tree li a:hover+ul li::after,
+.tree li a:hover+ul li::before,
+.tree li a:hover+ul::before,
+.tree li a:hover+ul ul::before {
+  border-color: #94a0b4;
+}
