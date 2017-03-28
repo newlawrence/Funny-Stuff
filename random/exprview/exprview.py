@@ -8,7 +8,12 @@ import lxml.etree
 import calculate
 
 import PyQt5
-from PyQt5 import QtCore, QtGui, QtWidgets, QtWebKitWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+try:
+    from PyQt5.QtWebKitWidgets import QWebView
+except ImportError:
+    from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
 
 
 qt_path = os.path.dirname(PyQt5.__file__)
@@ -39,7 +44,7 @@ class MainForm(QtWidgets.QWidget):
             QtWidgets.QSizePolicy.Minimum
         ))
 
-        self.tree_view = QtWebKitWidgets.QWebView()
+        self.tree_view = QWebView()
         self.tree_view.setHtml('')
 
         self.form_layout.addLayout(self.expression_layout)
@@ -100,6 +105,7 @@ class MainForm(QtWidgets.QWidget):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
+    app.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
     form = MainForm()
     form.show()
     sys.exit(app.exec_())
