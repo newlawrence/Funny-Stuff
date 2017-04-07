@@ -29,7 +29,7 @@ class MainForm(QtWidgets.QWidget):
 
         self.setWindowTitle('Expression Tree Viewer')
         self.setWindowIcon(QtGui.QIcon(os.path.join(app_path, 'icon.png')))
-        self.resize(400, 300)
+        self.resize(280, 380)
         self.form_layout = QtWidgets.QVBoxLayout()
 
         self.expression_layout = QtWidgets.QHBoxLayout()
@@ -71,8 +71,6 @@ class MainForm(QtWidgets.QWidget):
         tree_string = expression.tree()
         tree_string = tree_string.replace('[', '').replace(']', '')
         tree_string = tree_string.replace('|', ' ').replace('\\_', '  ')
-        tree_string = tree_string.replace('id', '+')
-        tree_string = tree_string.replace('neg', '-')
         tree_list = tree_string.split('\n')
 
         head = lxml.etree.Element('div')
