@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>exprview.png</file>
+        <file>style.css</file>
+    </qresource>
+</RCC>
