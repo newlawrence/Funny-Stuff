@@ -21,27 +21,20 @@ MainWindow::MainWindow(QWidget *parent) :
         _header{},
         _footer{}
 {
-    QFile file{":style.css"};
-    auto form_layout = new QVBoxLayout{};
-    auto expression_layout = new QHBoxLayout{};
-    auto expression_label = new QLabel{"Expression"};
-    calculate::Lexer<double> lexer{
-        {"(", ")", ",", "."},
-        {
-            R"_(^(?:\d+\.?\d*|\.\d+)+(?:[eE][+\-]?\d+)?$)_",
-            R"_(^[A-Za-z_]+[A-Za-z_\d]*$)_",
-            R"_(^[^A-Za-z\d.(),_\s]$)_",
-            R"_(((?:\d+\.?\d*|\.\d+)+(?:[eE][+\-]?\d+)?)|)_"
-            R"_(([A-Za-z_]+[A-Za-z_\d]*)|)_"
-            R"_(([^A-Za-z\d\.(),_\s])|)_"
-            R"_((\()|(\))|(,)|(\.))_"
-        }
-    };
+    calculate::DefaultParser::DefaultLexer lexer{{
+        calculate::default_number,
+        calculate::default_name,
+        R"_(^[^A-Za-z\d.(),_\s]$)_"
+    }};
+    _parser = std::make_unique<calculate::DefaultParser>(lexer);
 
     setWindowTitle("Expression Tree Viewer");
     setWindowIcon(QIcon{":exprview.png"});
     resize(280, 380);
 
+    auto form_layout = new QVBoxLayout{};
+    auto expression_layout = new QHBoxLayout{};
+    auto expression_label = new QLabel{"Expression"};
     expression_label->setBuddy(_expression_box);
     expression_layout->addWidget(expression_label);
     expression_layout->addWidget(_expression_box);
@@ -51,14 +44,13 @@ MainWindow::MainWindow(QWidget *parent) :
     _main_widget->setLayout(form_layout);
     setCentralWidget(_main_widget);
 
+    QFile file{":style.css"};
     file.open(QFile::ReadOnly | QFile::Text);
     _header = "<html><head><style>";
     _header += file.readAll();
     _header += "</style></head><body><div class=\"tree\">";
     _footer += "</div></body></html>";
     file.close();
-
-    _parser = std::make_unique<calculate::DefaultParser>(lexer);
     _tree_view->setHtml("");
 
     connect(
