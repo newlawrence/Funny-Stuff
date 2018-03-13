@@ -20,6 +20,7 @@ class MainWindow : public QMainWindow {
     QLineEdit* _expression_box;
     QLabel* _infix_box;
     QLabel* _postfix_box;
+    QLabel* _result_box;
     QWebEngineView* _tree_view;
 
     std::unique_ptr<calculate::Parser> _parser;

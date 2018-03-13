@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
         _expression_box{new QLineEdit{""}},
         _infix_box{new QLabel{""}},
         _postfix_box{new QLabel{""}},
+        _result_box{new QLabel{""}},
         _tree_view{new QWebEngineView{}},
         _parser{nullptr},
         _header{},
@@ -56,10 +57,19 @@ MainWindow::MainWindow(QWidget *parent) :
     postfix_layout->addWidget(postfix_label);
     postfix_layout->addWidget(_postfix_box);
 
+    auto result_layout = new QHBoxLayout{};
+    auto result_label = new QLabel{"<b>Result:</b>"};
+    result_label->setBuddy(_result_box);
+    _result_box->setAlignment(Qt::AlignRight);
+    result_layout->addWidget(result_label);
+    result_layout->addWidget(_result_box);
+
     form_layout->addLayout(expression_layout);
     form_layout->addLayout(infix_layout);
     form_layout->addLayout(postfix_layout);
+
     form_layout->addWidget(_tree_view);
+    form_layout->addLayout(result_layout);
     _main_widget->setLayout(form_layout);
     setCentralWidget(_main_widget);
 
@@ -86,11 +96,18 @@ MainWindow::~MainWindow() {}
 void MainWindow::render_tree(const QString& expression) {
     try {
         using Expression = calculate::Parser::Expression;
-        Expression tree = _parser->parse(expression.toStdString());
+        Expression tree = _parser->from_infix(expression.toStdString());
 
         using NodeIterator = decltype(tree.begin());
         _infix_box->setText(QString::fromStdString(tree.infix()));
         _postfix_box->setText(QString::fromStdString(tree.postfix()));
+
+        QString value = QString::fromStdString(
+            "<font color='red'><b>" +
+            _parser->lexer()->to_string(tree) +
+            "</font></b>"
+        );
+        _result_box->setText(value);
 
         std::vector<Expression> init{std::move(tree)};
         std::stack<std::pair<NodeIterator, NodeIterator>> nodes;
@@ -121,6 +138,7 @@ void MainWindow::render_tree(const QString& expression) {
     catch(const calculate::BaseError&) {
         _infix_box->setText("");
         _postfix_box->setText("");
+        _result_box->setText("");
         _tree_view->setHtml("");
         _expression_box->setFocus();
     }
