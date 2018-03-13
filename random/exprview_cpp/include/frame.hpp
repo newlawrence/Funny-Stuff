@@ -6,6 +6,7 @@
 #include <QMainWindow>
 
 #include <QWidget>
+#include <QLabel>
 #include <QLineEdit>
 #include <QWebEngineView>
 
@@ -17,6 +18,8 @@ class MainWindow : public QMainWindow {
 
     QWidget* _main_widget;
     QLineEdit* _expression_box;
+    QLabel* _infix_box;
+    QLabel* _postfix_box;
     QWebEngineView* _tree_view;
 
     std::unique_ptr<calculate::Parser> _parser;

@@ -3,7 +3,6 @@
 
 #include <QFile>
 
-#include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QSizePolicy>
@@ -16,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
         QMainWindow{parent},
         _main_widget{new QWidget{}},
         _expression_box{new QLineEdit{""}},
+        _infix_box{new QLabel{""}},
+        _postfix_box{new QLabel{""}},
         _tree_view{new QWebEngineView{}},
         _parser{nullptr},
         _header{},
@@ -33,13 +34,31 @@ MainWindow::MainWindow(QWidget *parent) :
     resize(320, 480);
 
     auto form_layout = new QVBoxLayout{};
+
     auto expression_layout = new QHBoxLayout{};
     auto expression_label = new QLabel{"Expression"};
     expression_label->setBuddy(_expression_box);
+    _expression_box->setAlignment(Qt::AlignRight);
     expression_layout->addWidget(expression_label);
     expression_layout->addWidget(_expression_box);
 
+    auto infix_layout = new QHBoxLayout{};
+    auto infix_label = new QLabel{"Infix:"};
+    infix_label->setBuddy(_infix_box);
+    _infix_box->setAlignment(Qt::AlignRight);
+    infix_layout->addWidget(infix_label);
+    infix_layout->addWidget(_infix_box);
+
+    auto postfix_layout = new QHBoxLayout{};
+    auto postfix_label = new QLabel{"Postfix:"};
+    postfix_label->setBuddy(_postfix_box);
+    _postfix_box->setAlignment(Qt::AlignRight);
+    postfix_layout->addWidget(postfix_label);
+    postfix_layout->addWidget(_postfix_box);
+
     form_layout->addLayout(expression_layout);
+    form_layout->addLayout(infix_layout);
+    form_layout->addLayout(postfix_layout);
     form_layout->addWidget(_tree_view);
     _main_widget->setLayout(form_layout);
     setCentralWidget(_main_widget);
@@ -70,6 +89,9 @@ void MainWindow::render_tree(const QString& expression) {
         Expression tree = _parser->parse(expression.toStdString());
 
         using NodeIterator = decltype(tree.begin());
+        _infix_box->setText(QString::fromStdString(tree.infix()));
+        _postfix_box->setText(QString::fromStdString(tree.postfix()));
+
         std::vector<Expression> init{std::move(tree)};
         std::stack<std::pair<NodeIterator, NodeIterator>> nodes;
         QString body{};
@@ -97,6 +119,8 @@ void MainWindow::render_tree(const QString& expression) {
         _expression_box->setFocus();
     }
     catch(const calculate::BaseError&) {
+        _infix_box->setText("");
+        _postfix_box->setText("");
         _tree_view->setHtml("");
         _expression_box->setFocus();
     }
