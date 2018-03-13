@@ -135,11 +135,17 @@ void MainWindow::render_tree(const QString& expression) {
         _tree_view->setHtml(_header + body + _footer);
         _expression_box->setFocus();
     }
-    catch(const calculate::BaseError&) {
+    catch(const calculate::BaseError& error) {
         _infix_box->setText("");
         _postfix_box->setText("");
         _result_box->setText("");
-        _tree_view->setHtml("");
+
+        _tree_view->setHtml(QString::fromStdString(
+            "<div style='text-align:center;'>" +
+            std::string{error.what()} +
+            "</div>"
+        ));
+
         _expression_box->setFocus();
     }
 }
