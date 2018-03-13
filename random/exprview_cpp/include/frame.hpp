@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow {
     QLineEdit* _expression_box;
     QWebEngineView* _tree_view;
 
-    std::unique_ptr<calculate::DefaultParser> _parser;
+    std::unique_ptr<calculate::Parser> _parser;
     QString _header;
     QString _footer;
 
