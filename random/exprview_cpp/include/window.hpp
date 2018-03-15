@@ -11,8 +11,7 @@
 #include <QWebEngineView>
 
 #include "message.hpp"
-
-#include "calculate.hpp"
+#include "tree.hpp"
 
 
 class MainWindow : public QMainWindow {
@@ -26,15 +25,12 @@ class MainWindow : public QMainWindow {
     QWebEngineView* _tree_view;
 
     MessageHandler* _message_handler;
-
-    std::unique_ptr<calculate::Parser> _parser;
-    QString _header;
-    QString _footer;
+    TreeHandler* _tree_handler;
 
 public:
     explicit MainWindow(QWidget* parent=nullptr);
 
-    void renderTree(const QString& expression);
+    void handleError(const QString& text);
 };
 
 #endif

@@ -7,6 +7,7 @@
 
 class MessageHandler : public QObject {
     Q_OBJECT
+    Q_PROPERTY(QString text MEMBER _text NOTIFY textChanged FINAL)
 
     QString _text;
 

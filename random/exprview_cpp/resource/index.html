@@ -7,32 +7,32 @@
   </head>
 
   <body>
-    <div id='message'>Empty expression</div>
-    <div id='tree'></div>
+    <div id='placeholder'></div>
 
     <script>
         'use strict';
-        var message = document.getElementById('message'); //,
-            // tree = document.getElementById('tree');
+        var placeholder = document.getElementById('placeholder');
 
         function updateMessage(text) {
-            message.innerHTML = text;
-            tree.innerHTML = "";
+            placeholder.innerHTML = text;
+            placeholder.classList.add('error');
+            placeholder.classList.remove('tree');
         }
 
-        // function updateTree(text) {
-        //     message.innerHTML = "";
-        //     tree.innerHTML = text;
-        // }
+        function updateTree(text) {
+            placeholder.classList.add('tree');
+            placeholder.classList.remove('error');
+            placeholder.innerHTML = text;
+        }
 
         new QWebChannel(
             qt.webChannelTransport,
             function(channel) {
-                var message_handler = channel.objects.message_handler; //,
-                   // tree_handler = channel.objects.tree_handler;
-
+                var message_handler = channel.objects.message_handler,
+                    tree_handler = channel.objects.tree_handler;
+                updateMessage(message_handler.text);
                 message_handler.textChanged.connect(updateMessage);
-                // tree_handler.textChanged.connect(updateTree);
+                tree_handler.treeChanged.connect(updateTree);
             }
         );
     </script>

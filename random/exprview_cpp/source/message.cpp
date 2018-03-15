@@ -1,11 +1,12 @@
 #include "message.hpp"
 
 
-MessageHandler::MessageHandler(QObject* parent) : QObject{parent} {}
+MessageHandler::MessageHandler(QObject* parent) :
+        QObject{parent},
+        _text{"Empty expression"}
+{}
 
 void MessageHandler::setText(const QString& text) {
-    if (text == _text)
-        return;
     _text = text;
     emit textChanged(_text);
 }
