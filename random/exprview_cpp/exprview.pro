@@ -10,11 +10,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH += include
 
 SOURCES += \
-    source/frame.cpp \
-    source/main.cpp
+    source/main.cpp \
+    source/message.cpp \
+    source/tree.cpp \
+    source/window.cpp
 
 HEADERS += \
-    include/frame.hpp
+    include/message.hpp \
+    include/tree.hpp \
+    include/window.hpp
 
 RESOURCES += \
     resource/resource.qrc

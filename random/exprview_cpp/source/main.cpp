@@ -1,14 +1,14 @@
 #include <QApplication>
 
-#include "frame.hpp"
+#include "window.hpp"
 
 
 int main(int argc, char *argv[]) {
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication application{argc, argv};
 
-    MainWindow window{};
-    window.show();
+    MainWindow main_window{};
+    main_window.show();
 
     return application.exec();
 }

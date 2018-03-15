@@ -4,7 +4,11 @@
   text-align: center;
 }
 
-.tree {
+#message {
+  text-align: center;
+}
+
+#tree {
   -webkit-transform: scaleY(-1);
   display: inline-block;
   margin-left: auto;
@@ -13,7 +17,7 @@
   width: auto;
 }
 
-.tree ul {
+#tree ul {
   -webkit-align-items: -webkit-flex-stretch;
   background-color: #fff;
   display: -webkit-flex;
@@ -22,7 +26,7 @@
   z-index: 2;
 }
 
-.tree li {
+#tree li {
   -webkit-align-items: center;
   -webkit-flex-direction: column;
   display: -webkit-flex;
@@ -33,8 +37,8 @@
   white-space: nowrap;
 }
 
-.tree li::before,
-.tree li::after {
+#tree li::before,
+#tree li::after {
   border-top: 1px solid #ccc;
   content: '';
   height: calc(100% - 1px);
@@ -45,36 +49,36 @@
   z-index: 1;
 }
 
-.tree li::after {
+#tree li::after {
   border-left:1px solid #ccc;
   left:50%;
   right:auto;
 }
 
-.tree li:only-child::after,
-.tree li:only-child::before {
+#tree li:only-child::after,
+#tree li:only-child::before {
   display: none;
 }
 
-.tree li:only-child {
+#tree li:only-child {
   padding-top: 0;
 }
 
-.tree li:first-child::before,
-.tree li:last-child::after {
+#tree li:first-child::before,
+#tree li:last-child::after {
   border: 0 none;
 }
 
-.tree li:last-child::before {
+#tree li:last-child::before {
   border-radius: 0 5px 0 0;
   border-right: 1px solid #ccc;
 }
 
-.tree li:first-child::after {
+#tree li:first-child::after {
   border-radius: 5px 0 0 0;
 }
 
-.tree ul ul::before {
+#tree ul ul::before {
   border-left: 1px solid #ccc;
   content: '';
   height: 20px;
@@ -84,7 +88,7 @@
   width: 0;
 }
 
-.tree li a {
+#tree li a {
   -webkit-transform: scaleY(-1);
   background-color: #FFFFE0;
   border: 1px solid #ccc;
@@ -99,16 +103,16 @@
   z-index: 3;
 }
 
-.tree li a:hover,
-.tree li a:hover+ul li a {
+#tree li a:hover,
+#tree li a:hover+ul li a {
   background-color: #c8e4f8;
   border: 1px solid #94a0b4;
   color: #000;
 }
 
-.tree li a:hover+ul li::after,
-.tree li a:hover+ul li::before,
-.tree li a:hover+ul::before,
-.tree li a:hover+ul ul::before {
+#tree li a:hover+ul li::after,
+#tree li a:hover+ul li::before,
+#tree li a:hover+ul::before,
+#tree li a:hover+ul ul::before {
   border-color: #94a0b4;
 }

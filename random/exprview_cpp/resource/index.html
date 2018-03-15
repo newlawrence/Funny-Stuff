@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang='en-US'>
+  <head>
+    <meta charset='utf-8'>
+    <link rel='stylesheet' type='text/css' href='qrc:///style.css'>
+    <script src='qrc:///qwebchannel.js'></script>
+  </head>
+
+  <body>
+    <div id='message'>Empty expression</div>
+    <div id='tree'></div>
+
+    <script>
+        'use strict';
+        var message = document.getElementById('message'); //,
+            // tree = document.getElementById('tree');
+
+        function updateMessage(text) {
+            message.innerHTML = text;
+            tree.innerHTML = "";
+        }
+
+        // function updateTree(text) {
+        //     message.innerHTML = "";
+        //     tree.innerHTML = text;
+        // }
+
+        new QWebChannel(
+            qt.webChannelTransport,
+            function(channel) {
+                var message_handler = channel.objects.message_handler; //,
+                   // tree_handler = channel.objects.tree_handler;
+
+                message_handler.textChanged.connect(updateMessage);
+                // tree_handler.textChanged.connect(updateTree);
+            }
+        );
+    </script>
+
+  </body>
+</html>
