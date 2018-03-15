@@ -15,11 +15,11 @@ MainWindow::MainWindow(QWidget* parent) :
         _postfix_box{new QLabel{""}},
         _result_box{new QLabel{""}},
         _tree_view{new QWebEngineView{}},
-        _message_handler{new MessageHandler{this}},
+        _error_handler{new ErrorHandler{this}},
         _tree_handler{new TreeHandler{this}}
 {
     setWindowTitle("Expression Tree Viewer");
-    setWindowIcon(QIcon{":exprview.png"});
+    setWindowIcon(QIcon{"qrc:/icon/exprview.png"});
     resize(320, 480);
 
     auto create = [](auto label, auto box) noexcept {
@@ -47,10 +47,10 @@ MainWindow::MainWindow(QWidget* parent) :
     setCentralWidget(_main_widget);
 
     auto channel = new QWebChannel(_tree_view->page());
-    channel->registerObject("message_handler", _message_handler);
+    channel->registerObject("error_handler", _error_handler);
     channel->registerObject("tree_handler", _tree_handler);
     _tree_view->page()->setWebChannel(channel);
-    _tree_view->page()->load(QUrl{"qrc:/index.html"});
+    _tree_view->page()->load(QUrl{"qrc:/web/index.html"});
 
     auto bind = [&](auto method, auto box) noexcept {
         connect(_tree_handler, method, box, &QLabel::setText);
@@ -77,5 +77,5 @@ void MainWindow::handleError(const QString& text) {
     _infix_box->setText("");
     _postfix_box->setText("");
     _result_box->setText("");
-    _message_handler->setText(text);
+    _error_handler->setText(text);
 }

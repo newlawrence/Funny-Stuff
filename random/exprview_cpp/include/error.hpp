@@ -5,14 +5,14 @@
 #include <QString>
 
 
-class MessageHandler : public QObject {
+class ErrorHandler : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString text MEMBER _text NOTIFY textChanged FINAL)
 
     QString _text;
 
 public:
-    explicit MessageHandler(QObject* parent=nullptr);
+    explicit ErrorHandler(QObject* parent=nullptr);
 
     void setText(const QString& text);
 

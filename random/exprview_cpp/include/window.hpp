@@ -10,7 +10,7 @@
 #include <QLineEdit>
 #include <QWebEngineView>
 
-#include "message.hpp"
+#include "error.hpp"
 #include "tree.hpp"
 
 
@@ -24,7 +24,7 @@ class MainWindow : public QMainWindow {
     QLabel* _result_box;
     QWebEngineView* _tree_view;
 
-    MessageHandler* _message_handler;
+    ErrorHandler* _error_handler;
     TreeHandler* _tree_handler;
 
 public:

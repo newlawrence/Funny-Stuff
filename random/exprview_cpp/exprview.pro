@@ -10,18 +10,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH += include
 
 SOURCES += \
-    source/main.cpp \
-    source/message.cpp \
+    source/error.cpp \
     source/tree.cpp \
-    source/window.cpp
+    source/window.cpp \
+    source/main.cpp
 
 HEADERS += \
-    include/message.hpp \
+    include/error.hpp \
     include/tree.hpp \
     include/window.hpp
 
 RESOURCES += \
     resource/resource.qrc
 
-macx: ICON = resource/exprview.icns
-win32: RC_ICONS += resource/exprview.ico
+macx: ICON = resource/icon/exprview.icns
+win32: RC_ICONS += resource/icon/exprview.ico
