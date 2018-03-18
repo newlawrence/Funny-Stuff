@@ -9,7 +9,7 @@
 }
 
 .tree {
-  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
   display: inline-block;
   margin-left: auto;
   margin-right: auto;
@@ -18,18 +18,16 @@
 }
 
 .tree ul {
-  -webkit-align-items: -webkit-flex-stretch;
   background-color: #fff;
-  display: -webkit-flex;
+  display: flex;
   padding-top: 20px;
   position: relative;
-  z-index: 2;
 }
 
 .tree li {
-  -webkit-align-items: center;
-  -webkit-flex-direction: column;
-  display: -webkit-flex;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
   list-style-type: none;
   padding: 20px 5px 0;
   position: relative;
@@ -40,13 +38,16 @@
 .tree li::before,
 .tree li::after {
   border-top: 1px solid #ccc;
-  content: '';
-  height: calc(100% - 1px);
+  content: "";
+  /*height: calc(100% - 1px);*/
+  height: 20px;
   position: absolute;
-  right: 50%;
   top: 0;
   width: 50%;
-  z-index: 1;
+}
+
+.tree li::before {
+  right: calc(50% - 1px);
 }
 
 .tree li::after {
@@ -88,8 +89,28 @@
   width: 0;
 }
 
-.tree li a {
-  -webkit-transform: scaleY(-1);
+.tree .node {
+  display: flex;
+  position: relative;
+}
+
+.tree .mask {
+  content: "";
+  display: flex;
+  flex-grow: 1;
+  position: relative;
+  align-self: stretch;
+  width: 0;
+  left: 50%;
+  border-left: 1px solid #ccc;
+}
+
+.tree ul ul .mask {
+  min-height: 1px;
+}
+
+.tree a {
+  transform: scaleY(-1);
   background-color: #FFFFE0;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -97,22 +118,54 @@
   display: inline-block;
   font-family: Lucida Console, Monaco, monospace;
   font-size: 12px;
-  margin-top: auto;
   padding: 5px 10px;
   text-decoration: none;
-  z-index: 3;
+  z-index: 1;
 }
 
-.tree li a:hover,
-.tree li a:hover+ul li a {
+.tree .node:hover a,
+.tree .node:hover+ul li div a{
   background-color: #c8e4f8;
   border: 1px solid #94a0b4;
   color: #000;
 }
 
-.tree li a:hover+ul li::after,
-.tree li a:hover+ul li::before,
-.tree li a:hover+ul::before,
-.tree li a:hover+ul ul::before {
+.tree .node:hover+ul li::after,
+.tree .node:hover+ul li::before,
+.tree .node:hover+ul::before,
+.tree .node:hover+ul ul::before,
+.tree .node:hover+ul .mask {
   border-color: #94a0b4;
+}
+
+.tree span {
+  transform: translateX(-50%) scaleY(-1);
+  visibility: hidden;
+  font-family: Lucida Console, Monaco, monospace;
+  font-size: 12px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 10px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  position: absolute;
+  bottom: calc(50% + 20px);
+  left: calc(50% + 1px);
+  z-index: 2;
+}
+
+.tree span:after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #555 transparent;
+}
+
+.tree a:hover+span {
+  visibility: visible;
 }

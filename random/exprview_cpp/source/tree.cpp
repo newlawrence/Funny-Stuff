@@ -18,17 +18,16 @@ TreeHandler::TreeHandler(QObject* parent) :
 
 void TreeHandler::renderTree(const QString& expression) {
     try {
+        using Lexer = calculate::Parser::Lexer;
+        std::shared_ptr<Lexer> lexer = _parser->lexer();
+
         using Expression = calculate::Parser::Expression;
         Expression tree = _parser->from_infix(expression.toStdString());
 
         using NodeIterator = decltype(tree.begin());
         emit infixChanged(QString::fromStdString(tree.infix()));
         emit postfixChanged(QString::fromStdString(tree.postfix()));
-        emit resultChanged(QString::fromStdString(
-            "<font color='red'><b>" +
-            _parser->lexer()->to_string(tree) +
-            "</font></b>"
-        ));
+        emit resultChanged(QString::fromStdString(lexer->to_string(tree)));
 
         std::vector<Expression> init{std::move(tree)};
         std::stack<std::pair<NodeIterator, NodeIterator>> nodes;
@@ -41,7 +40,11 @@ void TreeHandler::renderTree(const QString& expression) {
             nodes.pop();
             if (node != end) {
                 body +=
-                    "<li><a>" + QString::fromStdString(node->token()) + "</a>";
+                    "<li><div class='mask'></div><div class='node'><a>" +
+                    QString::fromStdString(node->token()) +
+                    "</a><span>" +
+                    QString::fromStdString(lexer->to_string(*node)) +
+                    "</span></div>";
                 nodes.push({node + 1, end});
                 if (node->branches()) {
                     nodes.push({node->begin(), node->end()});

@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget* parent) :
     auto infix_layout = create(new QLabel{"Infix:"}, _infix_box);
     auto postfix_layout = create(new QLabel{"Postfix:"}, _postfix_box);
     auto result_layout = create(new QLabel{"<b>Result:</b>"}, _result_box);
+    _result_box->setStyleSheet("QLabel{font-weight: bold; color: red;}");
 
     form_layout->addLayout(expression_layout);
     form_layout->addLayout(infix_layout);
