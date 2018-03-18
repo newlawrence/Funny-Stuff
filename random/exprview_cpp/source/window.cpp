@@ -33,12 +33,17 @@ MainWindow::MainWindow(QWidget* parent) :
 
     auto form_layout = new QVBoxLayout{};
     auto expression_layout = create(new QLabel{"Expression:"}, _expression_box);
-    auto infix_layout = create(new QLabel{"Infix:"}, _infix_box);
-    auto postfix_layout = create(new QLabel{"Postfix:"}, _postfix_box);
+    auto infix_layout = create(new QLabel{"Infix notation:"}, _infix_box);
+    auto postfix_layout = create(new QLabel{"Postfix notation:"}, _postfix_box);
     auto result_layout = create(new QLabel{"<b>Result:</b>"}, _result_box);
     _result_box->setStyleSheet("QLabel{font-weight: bold; color: red;}");
 
+    auto line = new QFrame{};
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
     form_layout->addLayout(expression_layout);
+    form_layout->addWidget(line);
+
     form_layout->addLayout(infix_layout);
     form_layout->addLayout(postfix_layout);
     form_layout->addWidget(_tree_view);
@@ -51,7 +56,7 @@ MainWindow::MainWindow(QWidget* parent) :
     channel->registerObject("error_handler", _error_handler);
     channel->registerObject("tree_handler", _tree_handler);
     _tree_view->page()->setWebChannel(channel);
-    _tree_view->page()->load(QUrl{"qrc:/web/index.html"});
+    _tree_view->page()->load(QUrl{"qrc:/visor/index.html"});
 
     auto bind = [&](auto method, auto box) noexcept {
         connect(_tree_handler, method, box, &QLabel::setText);

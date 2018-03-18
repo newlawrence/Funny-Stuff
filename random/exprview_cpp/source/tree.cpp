@@ -32,6 +32,9 @@ void TreeHandler::renderTree(const QString& expression) {
         std::vector<Expression> init{std::move(tree)};
         std::stack<std::pair<NodeIterator, NodeIterator>> nodes;
         QString body{};
+        QString node_template =
+            "<div class='spacer'></div>"
+            "<div class='node'><a>{token}</a><span>{value}</span></div>";
 
         nodes.push({init.begin(), init.end()});
         body += "<ul>";
@@ -39,12 +42,10 @@ void TreeHandler::renderTree(const QString& expression) {
             auto node = nodes.top().first, end = nodes.top().second;
             nodes.pop();
             if (node != end) {
-                body +=
-                    "<li><div class='mask'></div><div class='node'><a>" +
-                    QString::fromStdString(node->token()) +
-                    "</a><span>" +
-                    QString::fromStdString(lexer->to_string(*node)) +
-                    "</span></div>";
+                body += "<li>";
+                body += QString{node_template}
+                    .replace("{token}", node->token().c_str())
+                    .replace("{value}", lexer->to_string(*node).c_str());
                 nodes.push({node + 1, end});
                 if (node->branches()) {
                     nodes.push({node->begin(), node->end()});

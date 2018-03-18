@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>icon/exprview.png</file>
-        <file>web/qwebchannel.js</file>
-        <file>web/index.html</file>
-        <file>web/style.css</file>
-        <file>web/load.js</file>
+        <file>visor/qwebchannel.js</file>
+        <file>visor/index.html</file>
+        <file>visor/style.css</file>
+        <file>visor/load.js</file>
     </qresource>
 </RCC>
