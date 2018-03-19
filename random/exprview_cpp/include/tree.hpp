@@ -15,14 +15,15 @@ class TreeHandler : public QObject {
 public:
     explicit TreeHandler(QObject* parent=nullptr);
 
-    void renderTree(const QString& expression);
-
 signals:
     void infixChanged(const QString& expression);
     void postfixChanged(const QString& expression);
     void resultChanged(const QString& expression);
     void treeChanged(const QString& expression);
     void errorRaised(const QString& expression);
+
+public slots:
+    void renderTree(const QString& expression);
 };
 
 #endif

@@ -19,9 +19,9 @@ class MainWindow : public QMainWindow {
 
     QWidget* _main_widget;
     QLineEdit* _expression_box;
-    QLabel* _infix_box;
-    QLabel* _postfix_box;
-    QLabel* _result_box;
+    QLineEdit* _infix_box;
+    QLineEdit* _postfix_box;
+    QLineEdit* _result_box;
     QWebEngineView* _tree_view;
 
     ErrorHandler* _error_handler;
@@ -30,6 +30,7 @@ class MainWindow : public QMainWindow {
 public:
     explicit MainWindow(QWidget* parent=nullptr);
 
+public slots:
     void handleError(const QString& text);
 };
 

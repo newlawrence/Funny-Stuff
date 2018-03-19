@@ -14,10 +14,11 @@ class ErrorHandler : public QObject {
 public:
     explicit ErrorHandler(QObject* parent=nullptr);
 
-    void setText(const QString& text);
-
 signals:
     void textChanged(const QString& text);
+
+public slots:
+    void setText(const QString& text);
 };
 
 #endif

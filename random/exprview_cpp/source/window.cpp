@@ -11,9 +11,9 @@ MainWindow::MainWindow(QWidget* parent) :
         QMainWindow{parent},
         _main_widget{new QWidget{}},
         _expression_box{new QLineEdit{""}},
-        _infix_box{new QLabel{""}},
-        _postfix_box{new QLabel{""}},
-        _result_box{new QLabel{""}},
+        _infix_box{new QLineEdit{""}},
+        _postfix_box{new QLineEdit{""}},
+        _result_box{new QLineEdit{""}},
         _tree_view{new QWebEngineView{}},
         _error_handler{new ErrorHandler{this}},
         _tree_handler{new TreeHandler{this}}
@@ -36,7 +36,15 @@ MainWindow::MainWindow(QWidget* parent) :
     auto infix_layout = create(new QLabel{"Infix notation:"}, _infix_box);
     auto postfix_layout = create(new QLabel{"Postfix notation:"}, _postfix_box);
     auto result_layout = create(new QLabel{"<b>Result:</b>"}, _result_box);
-    _result_box->setStyleSheet("QLabel{font-weight: bold; color: red;}");
+
+    auto box = QString{"qproperty-frame:false;background-color:transparent;"};
+    auto highlight = QString{"font-weight:bold;color:red"};
+    _infix_box->setStyleSheet("QLineEdit{" + box + "}");
+    _infix_box->setReadOnly(true);
+    _postfix_box->setStyleSheet("QLineEdit{" + box + "}");
+    _postfix_box->setReadOnly(true);
+    _result_box->setStyleSheet("QLineEdit{" + box + highlight + "}");
+    _result_box->setReadOnly(true);
 
     auto line = new QFrame{};
     line->setFrameShape(QFrame::HLine);
@@ -57,11 +65,11 @@ MainWindow::MainWindow(QWidget* parent) :
     channel->registerObject("tree_handler", _tree_handler);
     _tree_view->page()->setWebChannel(channel);
     _tree_view->page()->load(QUrl{"qrc:/visor/index.html"});
+    _tree_view->setContextMenuPolicy(Qt::NoContextMenu);
 
     auto bind = [&](auto method, auto box) noexcept {
-        connect(_tree_handler, method, box, &QLabel::setText);
+        connect(_tree_handler, method, box, &QLineEdit::setText);
     };
-
     bind(&TreeHandler::infixChanged, _infix_box);
     bind(&TreeHandler::postfixChanged, _postfix_box);
     bind(&TreeHandler::resultChanged, _result_box);
