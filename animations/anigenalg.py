@@ -279,7 +279,7 @@ if mode_col:
     cell_p = [[plt.Rectangle((j, i), 1., 1., color='white')
               for j in range(bits)] for i in range(pop)]
     merit_p = [plt.Rectangle((bits + 1, i), 1., 1.,
-               color=plt.cm.spectral(m[i])) for i in range(pop)]
+               color=plt.cm.Spectral(m[i])) for i in range(pop)]
 else:
     x_min = (pop - bits - 2) // 2
     x_max = (bits + 2) + x_min

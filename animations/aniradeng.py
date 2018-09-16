@@ -268,7 +268,7 @@ r_radius = c_radius * np.cos(union_angle)    # Cylinder and crankcase union.
 FW = 8.125    # Figure default width in inches.
 fig = plt.figure('Radial Engine Animation', figsize=(FW, FW / AR),
                  facecolor='white')
-color = plt.cm.spectral(np.linspace(0., 0.9, n))    # Colormap for rods.
+color = plt.cm.Spectral(np.linspace(0., 0.9, n))    # Colormap for rods.
 
 # Axes #1 for plotting the schematic drawing.
 ax1 = fig.add_axes([0., 0., 0.5, 1.], aspect='equal', frameon=False)
