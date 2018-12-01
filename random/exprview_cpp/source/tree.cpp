@@ -9,10 +9,13 @@ TreeHandler::TreeHandler(QObject* parent) :
         _parser{nullptr}
 {
     _parser = std::make_unique<calculate::Parser>(
-        calculate::lexer_from_regexes<double>(
+        calculate::Lexer<double>(
             calculate::defaults::number<double>,
             calculate::defaults::name,
-            R"_(^[^A-Za-z\d.(),_\s]$)_"
+            R"_(^[^A-Za-z\d.(),_\s]$)_",
+            calculate::defaults::left,
+            calculate::defaults::right,
+            calculate::defaults::separator
         )
     );
 }
