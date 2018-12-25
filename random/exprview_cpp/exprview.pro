@@ -21,7 +21,7 @@ HEADERS += \
     include/window.hpp
 
 RESOURCES += \
-    resource/resource.qrc
+    exprview.qrc
 
 macx: ICON = resource/icon/exprview.icns
 win32: RC_ICONS += resource/icon/exprview.ico
