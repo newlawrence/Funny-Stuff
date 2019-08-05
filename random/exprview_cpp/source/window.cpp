@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget* parent) :
         _tree_handler{new TreeHandler{this}}
 {
     setWindowTitle("Expression Tree Viewer");
-    setWindowIcon(QIcon{"qrc:/icon/exprview.png"});
+    setWindowIcon(QIcon{"qrc:/exprview.png"});
     resize(320, 480);
 
     auto create = [](auto label, auto box) noexcept {
@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget* parent) :
     channel->registerObject("error_handler", _error_handler);
     channel->registerObject("tree_handler", _tree_handler);
     _tree_view->page()->setWebChannel(channel);
-    _tree_view->page()->load(QUrl{"qrc:/visor/index.html"});
+    _tree_view->page()->load(QUrl{"qrc:/index.html"});
     _tree_view->setContextMenuPolicy(Qt::NoContextMenu);
 
     auto bind = [&](auto method, auto box) noexcept {

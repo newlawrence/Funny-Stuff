@@ -1,4 +1,4 @@
-QT += core gui widgets webenginewidgets
+QT += core gui widgets webchannel webenginewidgets
 CONFIG += c++14
 
 greaterThan(QT_MAJOR_VERSION, 5): QT += widgets webenginewidgets

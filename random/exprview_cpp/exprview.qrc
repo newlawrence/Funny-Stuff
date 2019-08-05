@@ -1,9 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>icon/exprview.png</file>
-        <file>visor/qwebchannel.js</file>
-        <file>visor/index.html</file>
-        <file>visor/style.css</file>
-        <file>visor/load.js</file>
+        <file alias="exprview.png">resource/icon/exprview.png</file>
+        <file alias="index.html">resource/visor/index.html</file>
+        <file alias="style.css">resource/visor/style.css</file>
+        <file alias="load.js">resource/visor/load.js</file>
     </qresource>
 </RCC>
